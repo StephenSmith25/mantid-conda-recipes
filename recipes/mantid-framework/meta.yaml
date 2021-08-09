@@ -1,0 +1,78 @@
+{% set version = "6.1.1" %}
+
+package:
+  name: mantid-framework
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/mantidproject/mantid.git
+  git_tag: 32079_mantidqt_separate_package
+  # git_tag mantid_framework_conda
+  patches:
+    # - finder_patch.patch
+    #- windows_mantid.patch  # [win]
+    #- windows_bundle.patch  # [win]
+    #- install_patch.patch
+
+build:
+  number: 0
+  run_exports:
+    - {{ pin_subpackage('mantid-framework', max_pin='x.x.x') }}
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - llvm-openmp  # [osx]
+    - libgomp  # [linux]
+    - ninja  # [unix]
+    - cmake
+  host:
+    - boost<=1.75
+    - eigen
+    - gsl<=2.6
+    - h5py
+    - hdf5=1.10.*
+    - jemalloc  # [unix]
+    - jsoncpp
+    - librdkafka
+    - lib3mf  # [win]
+    - muparser
+    - nexus
+    - numpy {{ numpy }}
+    - occt
+    - python {{ python }}
+    - poco
+    - tbb-devel=2020.2.*
+    - zlib
+    - pip
+  run:
+    - {{ pin_compatible("boost", max_pin="x.x") }}
+    - {{ pin_compatible("gsl", max_pin="x.x") }}
+    - h5py
+    - {{ pin_compatible("jsoncpp", max_pin="x.x.x") }}
+    - lib3mf  # [win]
+    - matplotlib-base
+    - nexus
+    - {{ pin_compatible("numpy", max_pin="x.x") }}
+    - occt
+    - python
+    - python-dateutil
+    - pyyaml
+    - scipy
+
+test:
+  imports:
+    - mantid.kernel
+    - mantid.geometry
+    - mantid.api
+    - mantid.simpleapi
+
+about:
+  home: https://github.com/mantidproject/mantid
+  license: GPL-3.0-or-later
+  summary: Mantid provides a framework that supports high-performance computing and visualisation of materials science data.
+
+extra:
+  recipe-maintainers:
+    - StephenSmith25
