@@ -7,12 +7,8 @@ package:
 source:
   git_url: https://github.com/mantidproject/mantid.git
   git_tag: 32079_mantidqt_separate_package
-  # git_tag mantid_framework_conda
   patches:
-    # - finder_patch.patch
-    #- windows_mantid.patch  # [win]
-    #- windows_bundle.patch  # [win]
-    #- install_patch.patch
+    - linux_patch.patch  # [linux]
 
 build:
   number: 0
@@ -29,20 +25,11 @@ requirements:
     - cmake
     - {{ cdt('mesa-libgl-devel') }}  # [linux]
     - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('libselinux') }}  # [linux]
-    - {{ cdt('libxdamage') }}  # [linux]
-    - {{ cdt('libxfixes') }}  # [linux]
     - {{ cdt('libxxf86vm') }}  # [linux]
-    - {{ cdt('libxcb') }}  # [linux]
-    - {{ cdt('expat') }}  # [linux]
-    - {{ cdt('libxext') }}  # [linux]
-    - {{ cdt('libxrender') }}  # [linux]
-    - {{ cdt('libxt') }}  # [linux]
-    - {{ cdt('libxft') }}  # [linux]
     - {{ cdt('libx11-devel') }}  # [linux]
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
   host:
-    - boost<=1.75
+    - boost {{ boost }}
     - eigen
     - gsl<=2.6
     - h5py
@@ -64,7 +51,6 @@ requirements:
     - {{ pin_compatible("boost", max_pin="x.x") }}
     - {{ pin_compatible("gsl", max_pin="x.x") }}
     - h5py
-    - {{ pin_compatible("jsoncpp", max_pin="x.x.x") }}
     - lib3mf  # [win]
     - matplotlib-base
     - nexus

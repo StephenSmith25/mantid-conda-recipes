@@ -5,22 +5,16 @@ cmake ^
     -DCMAKE_INSTALL_LIBDIR=%LIBRARY_LIB% ^
     -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
     -DCONDA_BUILD=True ^
-    -DENABLE_WORKBENCH=OFF ^
-    -DENABLE_MANTIDQT=OFF ^
     -DENABLE_PRECOMMIT=OFF ^
     -DENABLE_DOCS=OFF ^
-    -DWORKBENCH_SITE_PACKAGES=%SP_DIR% ^
     -DUSE_SYSTEM_EIGEN=ON ^
+    -DWORKBENCH_SITE_PACKAGES=%SP_DIR% ^
+    -DMANTID_FRAMEWORK_LIB=BUILD ^
+    -DMANTID_QT_LIB=OFF ^
+    -DENABLE_WORKBENCH=OFF ^
     ..
 
 if errorlevel 1 exit 1
 cmake --build . --config Release
 cmake --build . --config Release --target install
 if errorlevel 1 exit 1
-
-
-@REM set DATA_DIR="%SP_DIR%\mantid"
-@REM if not exist %DATA_DIR% mkdir %DATA_DIR%
-@REM robocopy %LIBRARY_BIN%\mantid %DATA_DIR% * /E
-@REM if %ERRORLEVEL% GTR 3 exit 1
-
